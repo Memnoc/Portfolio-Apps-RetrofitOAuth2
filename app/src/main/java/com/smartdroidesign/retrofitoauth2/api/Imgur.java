@@ -15,9 +15,9 @@ public interface Imgur {
      * HANDLING AUTHENTICATION
      */
     String IMGUR_BASE_URL = "https://api.imgur.com";
-    String IMGUR_CLIENT_ID = "fbb27c8f037abf1";
+    String IMGUR_CLIENT_ID = "";
     String AUTHORIZATION_URL = "https://api.imgur.com/oauth2/authorize?client_id=" + IMGUR_CLIENT_ID + "&response_type=token";
-    String REDIRECT_URL = "https://threehouseworkshop:88";
+    String REDIRECT_URL = "https://smartdroidworkshop:88";
 
     /**
      * sub-interface to describe the endpoint you're connecting to

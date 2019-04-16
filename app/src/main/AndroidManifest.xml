@@ -31,7 +31,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="https://threehouseworkshop"
+                    android:host="https://smartdroidworkshop"
                     android:port="88"
                     android:pathPattern="/.*"/>
             </intent-filter>
