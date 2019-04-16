@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btn_sign_in" type="id" />
+    <item name="btn_upload_anon" type="id" />
+    <item name="account_images_container" type="id" />
+    <item name="recyclerview" type="id" />
+    <item name="btn_upload" type="id" />
+</resources>
