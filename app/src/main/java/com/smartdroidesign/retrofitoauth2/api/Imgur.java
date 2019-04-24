@@ -19,7 +19,7 @@ public interface Imgur {
      * HANDLING AUTHENTICATION
      */
     String IMGUR_BASE_URL = "https://api.imgur.com";
-    String IMGUR_CLIENT_ID = "c10d2c1b45cf84f";
+    String IMGUR_CLIENT_ID = "";
     String AUTHORIZATION_URL = "https://api.imgur.com/oauth2/authorize?client_id=" + IMGUR_CLIENT_ID + "&response_type=token";
     String REDIRECT_URL = "https://smartdroidworkshop:88";
 
@@ -36,5 +36,12 @@ public interface Imgur {
         @POST("3/upload")
         Call<Basic<Image>> uploadImage(@Part("image") RequestBody image);
 
+    }
+
+    // Interface for anonymous upload
+    interface Anon {
+        @Multipart
+        @POST("3/upload")
+        Call<Basic<Image>> uploadImage(@Part("image") RequestBody image);
     }
 }

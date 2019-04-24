@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_upload_anon:
                 // TODO
+                uploadAnon();
                 break;
             case R.id.btn_upload:
                 // TODO
@@ -169,6 +170,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<Basic<Image>> call, Response<Basic<Image>> response) {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         fetchAccountImages();
+                    } else {
+                        Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Basic<Image>> call, Throwable t) {
+
+                }
+            });
+        } catch (IOException e) {
+
+        }
+    }
+
+    private void uploadAnon() {
+        Snackbar.make(upload, "Uploading Anon Image", Snackbar.LENGTH_SHORT).show();
+
+        try {
+            BufferedSource img = Okio.buffer(Okio.source(getAssets().open("Screenshot.png")));
+            byte[] image = img.readByteArray();
+
+            Service.getAnonApi().uploadImage(
+                    RequestBody.create(
+                            MediaType.parse("image/png"),
+                            image
+                    )
+            ).enqueue(new Callback<Basic<Image>>() {
+                @Override
+                public void onResponse(Call<Basic<Image>> call, Response<Basic<Image>> response) {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().data.link)));
                     } else {
                         Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
                     }
