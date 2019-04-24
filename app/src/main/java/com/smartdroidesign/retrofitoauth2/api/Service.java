@@ -11,8 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Service class to create instances of the API
- *
- * */
+ */
 public class Service {
     public static Imgur.Anon getAnonApi() {
 
@@ -40,7 +39,6 @@ public class Service {
 
 
     /**
-     *
      * @return an instance of the Imgur class (interface)
      */
     public static Imgur.Auth getAuthedApi() {
