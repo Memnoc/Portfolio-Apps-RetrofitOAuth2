@@ -16,10 +16,17 @@ import com.smartdroidesign.retrofitoauth2.api.Service;
 import com.smartdroidesign.retrofitoauth2.model.Basic;
 import com.smartdroidesign.retrofitoauth2.model.Image;
 import com.smartdroidesign.retrofitoauth2.view.ImageAdapter;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okio.BufferedSource;
+import okio.Okio;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -116,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_upload:
                 // TODO
+                upload();
                 break;
             case R.id.btn_sign_in:
                 // TODO start login process
@@ -130,7 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .enqueue(new Callback<Basic<ArrayList<Image>>>() {
                     @Override
                     public void onResponse(Call<Basic<ArrayList<Image>>> call, Response<Basic<ArrayList<Image>>> response) {
-
+                        if (response.code() == HttpURLConnection.HTTP_OK) {
+                            ((ImageAdapter) recyclerView.getAdapter()).swap(response.body().data);
+                        } else {
+                            Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -140,5 +152,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    private void upload() {
+        Snackbar.make(upload, "Uploading Image", Snackbar.LENGTH_SHORT).show();
 
+        try {
+            BufferedSource img = Okio.buffer(Okio.source(getAssets().open("Screenshot.png")));
+            byte[] image = img.readByteArray();
+
+            Service.getAuthedApi().uploadImage(
+                    RequestBody.create(
+                            MediaType.parse("image/png"),
+                            image
+                    )
+            ).enqueue(new Callback<Basic<Image>>() {
+                @Override
+                public void onResponse(Call<Basic<Image>> call, Response<Basic<Image>> response) {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        fetchAccountImages();
+                    } else {
+                        Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Basic<Image>> call, Throwable t) {
+
+                }
+            });
+        } catch (IOException e) {
+
+        }
+    }
 }
