@@ -16,8 +16,6 @@ import com.smartdroidesign.retrofitoauth2.api.Service;
 import com.smartdroidesign.retrofitoauth2.model.Basic;
 import com.smartdroidesign.retrofitoauth2.model.Image;
 import com.smartdroidesign.retrofitoauth2.view.ImageAdapter;
-
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -129,17 +127,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void fetchAccountImages() {
         Snackbar.make(upload, "Getting images for Account", Snackbar.LENGTH_SHORT).show();
         Service.getAuthedApi().images(OAuthUtil.get(OAuthUtil.ACCOUNT_USERNAME), 0)
-            .enqueue(new Callback<Basic<ArrayList<Image>>>() {
-                @Override
-                public void onResponse(Call<Basic<ArrayList<Image>>> call, Response<Basic<ArrayList<Image>>> response) {
+                .enqueue(new Callback<Basic<ArrayList<Image>>>() {
+                    @Override
+                    public void onResponse(Call<Basic<ArrayList<Image>>> call, Response<Basic<ArrayList<Image>>> response) {
 
-                }
+                    }
 
-                @Override
-                public void onFailure(Call<Basic<ArrayList<Image>>> call, Throwable t) {
-                    Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Basic<ArrayList<Image>>> call, Throwable t) {
+                        Snackbar.make(upload, "Failed :(", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 

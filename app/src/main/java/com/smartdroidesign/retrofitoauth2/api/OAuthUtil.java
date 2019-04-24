@@ -52,13 +52,13 @@ public class OAuthUtil {
     }
 
     public static void set(String key, Long value) {
-        editSharedPrefs().putLong(key, value);
+        editSharedPrefs().putLong(key, value).commit();
     }
 
     public static boolean isAuthorized() {
         // 2- TODO complete logic here
 
         return get(ACCESS_TOKEN) != null &&
-                getLong(EXPIRES_IN) < System.currentTimeMillis();
+                getLong(EXPIRES_IN) > System.currentTimeMillis();
     }
 }
